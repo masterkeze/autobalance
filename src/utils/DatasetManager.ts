@@ -1,4 +1,4 @@
-import Logger from "./Logger";
+import { Logger } from "./Logger";
 
 function EnsureCreated(route: string): boolean {
 	if (!Memory.datasets) Memory.datasets = {};
@@ -10,7 +10,7 @@ function EnsureCreated(route: string): boolean {
 	}
 }
 
-export default class DatasetManager {
+export class DatasetManager {
 	/**
 	 * 在Memory中创建数据集
 	 * @param  {string} route 路径

@@ -1,6 +1,6 @@
 const ReportInterval = 60;
 const ErrorNotifyInterval = 30;
-export default class Logger {
+export class Logger {
 	public static info(msg:string,module?:string,method?:string) {
 		let information = `${new Date().toLocaleString()}[info][${Game.shard.name}][${Game.time}]`;
 		if (module) {

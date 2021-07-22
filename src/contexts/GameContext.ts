@@ -1,6 +1,4 @@
-import DatasetManager from "./DatasetManager";
-
-const TransferTaskRoute = "transferTask";
+import { ContextBase } from "./ContextBase";
 
 let _cache: {
 	tick: number,
@@ -19,17 +17,7 @@ function KeepUpToDate() {
 	}
 }
 
-export default class Context {
-	public static Initialize() {
-		DatasetManager.Create(TransferTaskRoute, [],
-			[{
-				clustered: true,
-				indexName: "fromRoomName"
-			}, {
-				clustered: false,
-				indexName: "toRoomName"
-			}], true);
-	}
+export class GameContext extends ContextBase {
 	/**
 	 * @returns Creep[]
 	 */
@@ -92,33 +80,5 @@ export default class Context {
 			}
 		}
 		return _cache.myCreepsInRoom[roomName] ? _cache.myCreepsInRoom[roomName] : [];
-	}
-
-	public static CreateTransferTask(from: { pos: RoomPosition, id: string }, to: { pos: RoomPosition, id: string }, resourceType: ResourceConstant, amount: number) {
-		let transferTask: TransferTask = {
-			id: _.uniqueId(),
-			fromId: from.id,
-			fromRoomName: from.pos.roomName,
-			fromX: from.pos.x,
-			fromY: from.pos.y,
-			toId: to.id,
-			toRoomName: to.pos.roomName,
-			toX: from.pos.x,
-			toY: from.pos.y,
-			resourceType: resourceType,
-			amount:amount
-		}
-		return transferTask;
-	}
-
-	public static AddTransferTask(transferTask: TransferTask) {
-		DatasetManager.Add(TransferTaskRoute, transferTask);
-	}
-
-	public static GetTransferTasksFromRoom(roomName: string) {
-		return DatasetManager.GetByProperty<TransferTask>(TransferTaskRoute, "fromRoomName", roomName);
-	}
-	public static GetTransferTasksToRoom(roomName: string) {
-		return DatasetManager.GetByProperty<TransferTask>(TransferTaskRoute, "toRoomName", roomName);
 	}
 }

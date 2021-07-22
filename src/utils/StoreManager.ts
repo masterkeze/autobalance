@@ -1,6 +1,6 @@
 
 
-export default class StoreManager {
+export class StoreManager {
 	private static get storage() {
 		return Memory.storeManager;
 	}

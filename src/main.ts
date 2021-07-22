@@ -1,16 +1,18 @@
-import Context from "utils/Context";
+import { ContextRegistry } from "contexts/ContextRegistry";
+import {GameContext} from "contexts/GameContext";
+import { TransferTaskContext } from "contexts/TransferTaskContext";
 import { ErrorMapper } from "utils/ErrorMapper";
-import Logger from "utils/Logger";
+import {Logger} from "utils/Logger";
 
-Context.Initialize();
-Logger.info(Context.roomNames.join(","));
-const mySpawns = Context.mySpawns;
+ContextRegistry.Register();
+Logger.info(GameContext.roomNames.join(","));
+const mySpawns = GameContext.mySpawns;
 if (mySpawns.length >= 2) {
-	Context.AddTransferTask(Context.CreateTransferTask(mySpawns[0], mySpawns[1], "energy", 100));
-	Context.AddTransferTask(Context.CreateTransferTask(mySpawns[1], mySpawns[0], "energy", 200));
+	TransferTaskContext.Add(TransferTaskContext.Create(mySpawns[0], mySpawns[1], "energy", 100));
+	TransferTaskContext.Add(TransferTaskContext.Create(mySpawns[1], mySpawns[0], "energy", 200));
 }
-Logger.info(JSON.stringify(Context.GetTransferTasksFromRoom("sim")));
-Logger.info(JSON.stringify(Context.GetTransferTasksToRoom("sim")));
+Logger.info(JSON.stringify(TransferTaskContext.GetByFromRoomName("sim")));
+Logger.info(JSON.stringify(TransferTaskContext.GetByToRoomName("sim")));
 
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change

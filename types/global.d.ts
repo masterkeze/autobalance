@@ -7,7 +7,7 @@
 	Interfaces matching on name from @types/screeps will be merged. This is how you can extend the 'built-in' interfaces from @types/screeps.
 */
 
-type indexKey = number|string
+type indexKey = number | string
 
 interface Memory {
 	storeManager: StoreManagerStorage
@@ -56,19 +56,4 @@ interface IndexConfig {
 	clustered: boolean
 	// 哪个属性建索引
 	indexName: string
-}
-
-
-// Context.ts
-interface TransferTask extends Entity {
-	fromId: string,
-	fromRoomName: string,
-	fromX: number,
-	fromY: number,
-	toId: string,
-	toRoomName: string,
-	toX: number,
-	toY: number,
-	resourceType: ResourceConstant,
-	amount: number
 }
