@@ -34,6 +34,45 @@ export class DatasetManager {
 				}
 			}
 			Logger.info(`Dataset:${route} created.`, "DatasetManager", "Create");
+		} else {
+			if (indexConfigs) {
+				let currentIndexes = Object.keys(Memory.datasets[route]);
+				let newIndexConfigs = indexConfigs.filter(config => !currentIndexes.includes(config.indexName));
+				if (newIndexConfigs.length > 0) {
+					const entities = _.flattenDeep(Object.values(Memory.datasets[route]["id"].data));
+					for (const indexConfig of newIndexConfigs) {
+						Memory.datasets[route][indexConfig.indexName] = {
+							clusterd: indexConfig.clustered,
+							data: {}
+						};
+					}
+					for (const entity of entities) {
+						for (const indexConfig of newIndexConfigs) {
+							const indexName = indexConfig.indexName;
+							const value = (entity as any)[indexName];
+							if (value == undefined) {
+								continue;
+							}
+							const index = Memory.datasets[route][indexName];
+							if (index.clusterd) {
+								// 聚集索引全量存储
+								if (index.data[value]) {
+									index.data[value].push(entity);
+								} else {
+									index.data[value] = [entity];
+								}
+							} else {
+								// 非聚集只存储主键列
+								if (index.data[value]) {
+									index.data[value].push(entity.id);
+								} else {
+									index.data[value] = [entity.id];
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		// 插入数据
 		for (const entity of entities) {
@@ -54,7 +93,7 @@ export class DatasetManager {
 		const indexNames = Object.keys(Memory.datasets[route]);
 		for (const indexName of indexNames) {
 			const value = (entity as any)[indexName];
-			if (!value) {
+			if (value == undefined) {
 				continue;
 			}
 			const index = Memory.datasets[route][indexName];
@@ -94,7 +133,8 @@ export class DatasetManager {
 				// 主键直接删除记录
 				delete index.data[value];
 			} else {
-				index.data[value] = _.remove(index.data[value], (x) => (x.id == entity.id));
+				//index.data[value] = _.filter(index.data[value],(id)=>{id != entity.id})
+				_.remove(index.data[value], (x) => (x == entity.id));
 				if (index.data[value].length == 0) delete index.data[value];
 			}
 
@@ -153,7 +193,13 @@ export class DatasetManager {
 				}
 				return lookup as T[];
 			}
+		} else {
+			if (Memory.datasets[route]["id"]) {
+				let data = _.flattenDeep(Object.values(Memory.datasets[route]["id"].data));
+				return data.filter(e => e[property] == value) as T[];
+			} else {
+				return [] as T[];
+			}
 		}
-		return [];
 	}
 }

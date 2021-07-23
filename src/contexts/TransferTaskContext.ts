@@ -1,3 +1,4 @@
+import { Logger } from "utils/Logger";
 import { DatasetManager } from "../utils/DatasetManager";
 import { ContextBase } from "./ContextBase";
 
@@ -24,12 +25,18 @@ export class TransferTaskContext extends ContextBase {
 			}, {
 				clustered: false,
 				indexName: "toRoomName"
+			}, {
+				clustered: true,
+				indexName: "resourceType"
+			}, {
+				clustered: false,
+				indexName: "fromId"
 			}], false);
 	}
 
 	public static Create(from: { pos: RoomPosition, id: string }, to: { pos: RoomPosition, id: string }, resourceType: ResourceConstant, amount: number) {
 		let transferTask: TransferTask = {
-			id: _.uniqueId(),
+			id: _.uniqueId(Game.time.toString()),
 			fromId: from.id,
 			fromRoomName: from.pos.roomName,
 			fromX: from.pos.x,
@@ -54,16 +61,25 @@ export class TransferTaskContext extends ContextBase {
 	public static GetByToRoomName(roomName: string) {
 		return DatasetManager.GetByProperty<TransferTask>(this.route, "toRoomName", roomName);
 	}
+	public static GetByResourceType(resourceType: ResourceConstant) {
+		return DatasetManager.GetByProperty<TransferTask>(this.route, "resourceType", resourceType);
+	}
+	public static GetByFromId(fromId: string) {
+		return DatasetManager.GetByProperty<TransferTask>(this.route, "fromId", fromId);
+	}
 
 	public static Add(transferTask: TransferTask) {
+		Logger.info(`Adding Task: ${JSON.stringify(transferTask)}`);
 		DatasetManager.Add(this.route, transferTask);
 	}
 
 	public static Remove(entity: TransferTask) {
+		Logger.info(`Removing Task: ${JSON.stringify(entity)}`);
 		DatasetManager.Remove(this.route, entity);
 	}
 
 	public static Update(entity: TransferTask) {
+		Logger.info(`Updating Task: ${JSON.stringify(entity)}`);
 		DatasetManager.Update(this.route, entity);
 	}
 }
