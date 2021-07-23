@@ -16,6 +16,7 @@ export class DatasetManager {
 	 * @param  {string} route 路径
 	 * @param  {Entity[]} entities 数据
 	 * @param  {IndexConfig[]} indexConfigs? 索引结构
+	 * @param  {boolean} reset? 是否清空重建
 	 */
 	public static Create(route: string, entities: Entity[], indexConfigs?: IndexConfig[], reset?: boolean) {
 		let created = EnsureCreated(route);
@@ -87,7 +88,7 @@ export class DatasetManager {
 	public static Add(route: string, entity: Entity) {
 		let created = EnsureCreated(route);
 		if (!created) {
-			Logger.error(`Adding ${JSON.stringify(entity)} to a non-existing dataset${route}`, "DatasetManager", "Add");
+			Logger.error(`Adding ${JSON.stringify(entity)} to a non-existing dataset:${route}`, "DatasetManager", "Add");
 			return;
 		}
 		const indexNames = Object.keys(Memory.datasets[route]);
@@ -118,7 +119,7 @@ export class DatasetManager {
 	public static Remove(route: string, entity: Entity) {
 		let created = EnsureCreated(route);
 		if (!created) {
-			Logger.error(`Removing ${JSON.stringify(entity)} from a non-existing dataset${route}`, "DatasetManager", "Remove");
+			Logger.error(`Removing ${JSON.stringify(entity)} from a non-existing dataset:${route}`, "DatasetManager", "Remove");
 			return;
 		}
 		const indexNames = Object.keys(Memory.datasets[route]);
@@ -144,7 +145,7 @@ export class DatasetManager {
 	public static Update(route: string, entity: Entity) {
 		let created = EnsureCreated(route);
 		if (!created) {
-			Logger.error(`Updating ${JSON.stringify(entity)} from a non-existing dataset${route}`, "DatasetManager", "Update");
+			Logger.error(`Updating ${JSON.stringify(entity)} from a non-existing dataset:${route}`, "DatasetManager", "Update");
 			return;
 		}
 		const indexNames = Object.keys(Memory.datasets[route]);
