@@ -7,7 +7,10 @@
 	Interfaces matching on name from @types/screeps will be merged. This is how you can extend the 'built-in' interfaces from @types/screeps.
 */
 
-type indexKey = number | string
+type IndexKey = number | string
+type TaskTypeConstant = "transferTask" | "distributeTask" | "harvestTask"
+type TaskStateConstant = "pending" | "running" | "complete" | "aborted"
+
 
 interface Memory {
 	storeManager: StoreManagerStorage
@@ -48,12 +51,45 @@ interface Dataset {
 	}
 }
 
-interface Entity {
-	id: string
-}
-
+// 索引配置
 interface IndexConfig {
 	clustered: boolean
 	// 哪个属性建索引
 	indexName: string
+}
+
+/**
+ * 全局基类
+ */
+
+// Task
+interface TaskDetail extends Entity {
+
+}
+
+interface Task extends Entity {
+	detailId: string
+	state: TaskStateConstant
+	type: TaskTypeConstant
+	createTick: number
+	detail: TaskDetail
+}
+
+// 数据基类
+interface Entity {
+	id: string
+}
+
+// TransferTaskDetailContext.ts
+interface TransferTaskDetail extends TaskDetail {
+	fromId: string,
+	fromRoomName: string,
+	fromX: number,
+	fromY: number,
+	toId: string,
+	toRoomName: string,
+	toX: number,
+	toY: number,
+	resourceType: ResourceConstant,
+	amount: number
 }

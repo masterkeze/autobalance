@@ -30,14 +30,6 @@ export class StoreInTransitContext extends ContextBase {
 		return DatasetManager.GetById<StoreInTransit>(this.route, id);
 	}
 
-	public static GetByGameObjectId(gameObjectId: string) {
-		return DatasetManager.GetByProperty<StoreInTransit>(this.route, "gameObjectId", gameObjectId);
-	}
-
-	public static GetByTaskId(taskId: string) {
-		return DatasetManager.GetByProperty<StoreInTransit>(this.route, "taskId", taskId);
-	}
-
 	public static Add(entity: StoreInTransit) {
 		DatasetManager.Add(this.route, entity);
 	}
@@ -48,5 +40,13 @@ export class StoreInTransitContext extends ContextBase {
 
 	public static Update(entity: StoreInTransit) {
 		DatasetManager.Update(this.route, entity);
+	}
+
+	public static GetByGameObjectId(gameObjectId: string) {
+		return DatasetManager.GetByProperty<StoreInTransit>(this.route, "gameObjectId", gameObjectId);
+	}
+
+	public static GetByTaskId(taskId: string) {
+		return DatasetManager.GetByProperty<StoreInTransit>(this.route, "taskId", taskId);
 	}
 }
