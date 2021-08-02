@@ -1,14 +1,9 @@
-import { ContextManager } from "contexts/ContextManager";
-import { GameContext } from "contexts/GameContext";
 import { ErrorMapper } from "utils/ErrorMapper";
-import { Logger } from "utils/Logger";
+import { Logger } from "services/Logger";
 
-ContextManager.RegisterAllContexts();
-Logger.info(GameContext.roomNames.join(","));
-const mySpawns = GameContext.mySpawns;
-if (mySpawns.length >= 2) {
-
-}
+Logger.Info("Logger.Info", "info");
+Logger.Error("Logger.Error",  "error");
+Logger.Notify("Logger.Notify", "notify");
 
 // When compiling TS to JS and bundling with rollup, the line numbers and file names in error messages change
 // This utility uses source maps to get the line numbers and file names of the original, TS source code

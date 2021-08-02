@@ -7,13 +7,13 @@
 	Interfaces matching on name from @types/screeps will be merged. This is how you can extend the 'built-in' interfaces from @types/screeps.
 */
 
-type IndexKey = number | string
 type TaskTypeConstant = "transferTask" | "distributeTask" | "harvestTask"
 type TaskStateConstant = "pending" | "running" | "complete" | "aborted"
 
-
+/**
+ * 全局变量
+ */
 interface Memory {
-	storeManager: StoreManagerStorage
 	datasets: Datasets
 }
 
@@ -30,14 +30,9 @@ declare namespace NodeJS {
 	}
 }
 
-
-// StoreManager.ts
-interface StoreManagerStorage {
-
-}
-
-
-// DatasetManager.ts
+/**
+ * 数据持久存储
+ */
 interface Datasets {
 	[route: string]: Dataset
 }
@@ -58,38 +53,16 @@ interface IndexConfig {
 	indexName: string
 }
 
-/**
- * 全局基类
- */
-
-// Task
-interface TaskDetail extends Entity {
-
-}
-
-interface Task extends Entity {
-	detailId: string
-	state: TaskStateConstant
-	type: TaskTypeConstant
-	createTick: number
-	detail: TaskDetail
-}
-
 // 数据基类
 interface Entity {
 	id: string
 }
 
-// TransferTaskDetailContext.ts
-interface TransferTaskDetail extends TaskDetail {
-	fromId: string,
-	fromRoomName: string,
-	fromX: number,
-	fromY: number,
-	toId: string,
-	toRoomName: string,
-	toX: number,
-	toY: number,
-	resourceType: ResourceConstant,
-	amount: number
+interface Context {
+	route:string,
+	Initialize(): void
+	Add(entity: Entity): void
+	Remove(entity: Entity): void
+	Update(entity: Entity): void
+	Get(id: string): Entity|undefined
 }

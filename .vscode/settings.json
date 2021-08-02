@@ -27,5 +27,6 @@
     "eslint.enable": true,
     "editor.formatOnPaste": true,
     "editor.formatOnType": true,
-    "editor.defaultFormatter": "vscode.typescript-language-features"
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "typescript.referencesCodeLens.enabled": true
 }

@@ -1,4 +1,5 @@
-import { Logger } from "./Logger";
+import { Logger } from "services/Logger";
+
 
 function EnsureCreated(route: string): boolean {
 	if (!Memory.datasets) Memory.datasets = {};
@@ -34,7 +35,7 @@ export class DatasetManager {
 					};
 				}
 			}
-			Logger.info(`Dataset:${route} created.`, "DatasetManager", "Create");
+			Logger.Info("DatasetManager.Create",`Dataset:${route} created.`);
 		} else {
 			if (indexConfigs) {
 				let currentIndexes = Object.keys(Memory.datasets[route]);
@@ -88,7 +89,7 @@ export class DatasetManager {
 	public static Add(route: string, entity: Entity) {
 		let created = EnsureCreated(route);
 		if (!created) {
-			Logger.error(`Adding ${JSON.stringify(entity)} to a non-existing dataset:${route}`, "DatasetManager", "Add");
+			Logger.Error("DatasetManager.Add",`Adding ${JSON.stringify(entity)} to a non-existing dataset:${route}`);
 			return;
 		}
 		const indexNames = Object.keys(Memory.datasets[route]);
@@ -119,7 +120,7 @@ export class DatasetManager {
 	public static Remove(route: string, entity: Entity) {
 		let created = EnsureCreated(route);
 		if (!created) {
-			Logger.error(`Removing ${JSON.stringify(entity)} from a non-existing dataset:${route}`, "DatasetManager", "Remove");
+			Logger.Error("DatasetManager.Remove", `Removing ${JSON.stringify(entity)} from a non-existing dataset:${route}`);
 			return;
 		}
 		const indexNames = Object.keys(Memory.datasets[route]);
@@ -145,7 +146,7 @@ export class DatasetManager {
 	public static Update(route: string, entity: Entity) {
 		let created = EnsureCreated(route);
 		if (!created) {
-			Logger.error(`Updating ${JSON.stringify(entity)} from a non-existing dataset:${route}`, "DatasetManager", "Update");
+			Logger.Error("DatasetManager.Update",`Updating ${JSON.stringify(entity)} from a non-existing dataset:${route}`);
 			return;
 		}
 		const indexNames = Object.keys(Memory.datasets[route]);
@@ -202,5 +203,64 @@ export class DatasetManager {
 				return [] as T[];
 			}
 		}
+	}
+	public static GetByProperties<T>(route: string, pairs: { property: string, value: any }[]): T[] {
+		// 多条件联查，贼复杂，先不整了。
+		EnsureCreated(route);
+		if (pairs.length == 0) return [] as T[];
+		if (Memory.datasets[route]["id"]) {
+			let result = this.GetByProperty<T>(route, pairs[0].property, pairs[1].property) as any[];
+			for (let i = 1; i < pairs.length; i++) {
+				const pair = pairs[i];
+				result = result.filter((e) => e[pair.property] == pair.value);
+			}
+			return result as T[];
+			// let data = _.flattenDeep(Object.values(Memory.datasets[route]["id"].data));
+			// return data.filter(e => {
+			// 	for (const pair of pairs) {
+			// 		let property = pair.property;
+			// 		let value = pair.value;
+			// 		if (e[property] != value) {
+			// 			return false;
+			// 		}
+			// 	}
+			// 	return true;
+			// }) as T[];
+		} else {
+			return [] as T[];
+		}
+		/*
+		const indices = [];
+		let indexExists = true;
+		for (const pair of pairs) {
+			let property = pair.property;
+			let value = pair.value;
+			const index = Memory.datasets[route][property];
+			if (!index) {
+				indexExists = false;
+				break;
+			} else {
+				indices.push(index);
+			}
+		}
+		if (indexExists) {
+			let result = Memory.datasets[route][property].data[value];
+			if (!result) return [];
+			// 聚集的直接返回
+			if (index.clusterd) {
+				return result as T[];
+			} else {
+				let lookup = [];
+				// 非聚集联查id索引
+				for (const id of result as string[]) {
+					let entity = Memory.datasets[route]["id"].data[id][0];
+					lookup.push(entity);
+				}
+				return lookup as T[];
+			}
+		} else {
+
+		}
+		*/
 	}
 }

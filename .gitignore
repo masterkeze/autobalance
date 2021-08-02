@@ -11,7 +11,7 @@
 /node_modules
 /_book
 /build/*
-
+/src_old
 # TypeScript definitions installed by Typings
 /typings
 
