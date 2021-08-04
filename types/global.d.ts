@@ -7,9 +7,6 @@
 	Interfaces matching on name from @types/screeps will be merged. This is how you can extend the 'built-in' interfaces from @types/screeps.
 */
 
-type TaskTypeConstant = "transferTask" | "distributeTask" | "harvestTask"
-type TaskStateConstant = "pending" | "running" | "complete" | "aborted"
-
 /**
  * 全局变量
  */
@@ -23,10 +20,20 @@ interface CreepMemory {
 	working: boolean;
 }
 
+interface Creep {
+	reach(target: { pos: RoomPosition } | RoomPosition, range?:number): ActionStatus
+	reachAsync(target: { pos: RoomPosition } | RoomPosition, range?: number): ActionEntity
+
+	withdrawOnce(target: Structure | Tombstone | Ruin, resourceType: ResourceConstant, amount?: number): ActionStatus
+	withdrawOnceAsync(target: Structure | Tombstone | Ruin, resourceType: ResourceConstant, amount?: number): ActionEntity
+}
+
 // Syntax for adding proprties to `global` (ex "global.log")
 declare namespace NodeJS {
 	interface Global {
-		log: any;
+		methods: {
+			[method:string]:Function
+		}
 	}
 }
 
@@ -59,10 +66,34 @@ interface Entity {
 }
 
 interface Context {
-	route:string,
+	route: string,
 	Initialize(): void
 	Add(entity: Entity): void
 	Remove(entity: Entity): void
 	Update(entity: Entity): void
-	Get(id: string): Entity|undefined
+	Get(id: string): Entity | undefined
+}
+
+interface PosEntity {
+	roomName: string
+	x: number
+	y: number
+}
+
+// 指令基类
+
+type ActionStatus = "waiting" | "running" | "complete" | "fail"
+
+interface ActionEntity extends Entity {
+	operatorId: string
+	type: string
+	parameters: any[]
+	status: ActionStatus
+}
+
+interface Action {
+	type:string
+	// 将异步方法绑到prototype上
+	mount(): void
+	run(actionEntity:ActionEntity): ActionStatus
 }
