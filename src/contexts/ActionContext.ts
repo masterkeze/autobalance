@@ -8,6 +8,8 @@ interface ActionContext extends Context {
 	Get(id: string): ActionEntity | undefined
 	Create(operatorId: string, type: string, parameters: any[]): ActionEntity
 	CreateAndAdd(operatorId: string, type: string, parameters: any[]): ActionEntity
+	RemoveById(id: string): void
+	RemoveByIds(ids:string[]):void
 }
 
 
@@ -46,5 +48,16 @@ export const ActionContext: ActionContext = {
 		};
 		this.Add(action);
 		return action;
+	},
+	RemoveById(id: string) {
+		const entity = this.Get(id);
+		if (entity) {
+			this.Remove(entity);
+		}
+	},
+	RemoveByIds(ids: string[]) {
+		for (const id of ids) {
+			this.RemoveById(id);
+		}
 	}
 }

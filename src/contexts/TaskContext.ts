@@ -1,5 +1,6 @@
 import { DatasetManager } from "data/DatasetManager"
 import { UniqueId } from "utils/UniqueId";
+import { ActionContext } from "./ActionContext";
 
 interface TaskContext extends Context {
 	Add(entity: TaskEntity): void
@@ -20,6 +21,9 @@ export const TaskContext: TaskContext = {
 	},
 	Remove(task: TaskEntity) {
 		DatasetManager.Remove(this.route, task);
+		task.actionsGroups.forEach((group) => {
+			ActionContext.RemoveByIds(group.actionsIds);
+		})
 	},
 	Update(task: TaskEntity) {
 		DatasetManager.Update(this.route, task);
