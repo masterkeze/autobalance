@@ -2,26 +2,30 @@ import { DatasetManager } from "data/DatasetManager"
 import { UniqueId } from "utils/UniqueId";
 
 interface ActionContext extends Context {
+	Add(entity: ActionEntity): void
+	Remove(entity: ActionEntity): void
+	Update(entity: ActionEntity): void
+	Get(id: string): ActionEntity | undefined
 	Create(operatorId: string, type: string, parameters: any[]): ActionEntity
 	CreateAndAdd(operatorId: string, type: string, parameters: any[]): ActionEntity
 }
 
 
 export const ActionContext: ActionContext = {
-	route: "command",
+	route: "action",
 	Initialize() {
 		DatasetManager.Create(this.route, [], [], true)
 	},
-	Add(command: ActionEntity) {
-		DatasetManager.Add(this.route, command);
+	Add(action: ActionEntity) {
+		DatasetManager.Add(this.route, action);
 	},
-	Remove(command: ActionEntity) {
-		DatasetManager.Remove(this.route, command);
+	Remove(action: ActionEntity) {
+		DatasetManager.Remove(this.route, action);
 	},
-	Update(command: ActionEntity) {
-		DatasetManager.Update(this.route, command);
+	Update(action: ActionEntity) {
+		DatasetManager.Update(this.route, action);
 	},
-	Get(id: string) {
+	Get(id: string): ActionEntity | undefined {
 		return DatasetManager.GetById<ActionEntity>(this.route, id);
 	},
 	Create(operatorId: string, type: string, parameters: any[]): ActionEntity {
@@ -30,7 +34,6 @@ export const ActionContext: ActionContext = {
 			operatorId: operatorId,
 			type: type,
 			parameters: parameters,
-			status: "waiting"
 		};
 		return action;
 	},
@@ -40,7 +43,6 @@ export const ActionContext: ActionContext = {
 			operatorId: operatorId,
 			type: type,
 			parameters: parameters,
-			status: "waiting"
 		};
 		this.Add(action);
 		return action;

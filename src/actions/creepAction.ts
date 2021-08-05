@@ -1,4 +1,4 @@
-import { ActionContext } from "contexts.ts/ActionContext";
+import { ActionContext } from "contexts/ActionContext";
 import { MethodManager } from "data/MethodManager";
 
 export const mountCreepAction = function () {

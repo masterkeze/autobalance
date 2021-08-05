@@ -1,4 +1,4 @@
-import { ActionContext } from "contexts.ts/ActionContext";
+import { ActionContext } from "contexts/ActionContext";
 import { Convert } from "utils/Convert";
 
 export const ReachAction: Action = {

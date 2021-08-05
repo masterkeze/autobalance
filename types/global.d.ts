@@ -80,20 +80,32 @@ interface PosEntity {
 	y: number
 }
 
-// 指令基类
+// 指令
 
-type ActionStatus = "waiting" | "running" | "complete" | "fail"
+type ActionStatus = "running" | "complete" | "fail"
 
 interface ActionEntity extends Entity {
 	operatorId: string
 	type: string
 	parameters: any[]
-	status: ActionStatus
 }
 
+
+// 任务
+type TaskStatus = "waiting" | "running" | "complete" | "fail"
 interface Action {
 	type:string
 	// 将异步方法绑到prototype上
 	mount(): void
 	run(actionEntity:ActionEntity): ActionStatus
+}
+
+interface ActionGroup {
+	waitType: "all" | "any"
+	// action ids
+	actionsIds: string[]
+}
+
+interface TaskEntity extends Entity {
+	actionsGroups:ActionGroup[]
 }
