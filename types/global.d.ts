@@ -23,17 +23,19 @@ interface CreepMemory {
 interface Creep {
 	reach(target: { pos: RoomPosition } | RoomPosition, range?:number): ActionStatus
 	reachAsync(target: { pos: RoomPosition } | RoomPosition, range?: number): ActionEntity
-
+	track(target: { pos: RoomPosition, id:string }, range?: number): ActionStatus
+	trackAsync(target: { pos: RoomPosition, id: string }, range?: number): ActionEntity
 	withdrawOnce(target: Structure | Tombstone | Ruin, resourceType: ResourceConstant, amount?: number): ActionStatus
 	withdrawOnceAsync(target: Structure | Tombstone | Ruin, resourceType: ResourceConstant, amount?: number): ActionEntity
+	transferOnce(target: AnyCreep | Structure, resourceType: ResourceConstant, amount?: number): ActionStatus
+	transferOnceAsync(target: AnyCreep | Structure, resourceType: ResourceConstant, amount?: number): ActionEntity
 }
 
 // Syntax for adding proprties to `global` (ex "global.log")
 declare namespace NodeJS {
 	interface Global {
-		methods: {
-			[method:string]:Function
-		}
+		mounted: boolean
+		testFunc():void
 	}
 }
 
@@ -92,11 +94,12 @@ interface ActionEntity extends Entity {
 
 
 // 任务
-type TaskStatus = "waiting" | "running" | "complete" | "fail"
+type TaskStatus = "running" | "complete" | "fail"
 interface Action {
 	type:string
-	// 将异步方法绑到prototype上
+	// 将同步方法，异步方法挂载到prototype上
 	mount(): void
+	// 执行给定的指令
 	run(actionEntity:ActionEntity): ActionStatus
 }
 
@@ -107,5 +110,7 @@ interface ActionGroup {
 }
 
 interface TaskEntity extends Entity {
+	status: TaskStatus
+	step: number
 	actionsGroups:ActionGroup[]
 }

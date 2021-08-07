@@ -1,7 +1,7 @@
 import { TaskContext } from "contexts/TaskContext";
 
 export class Task {
-	private _task: TaskEntity;
+	public _task: TaskEntity;
 
 	constructor() {
 		this._task = TaskContext.CreateAndAdd();
@@ -23,7 +23,7 @@ export class Task {
 	}
 	/**
 	 * 全部执行成功才算成功，失败会立即阻断。
-	 * @param actionEntities
+	 * @param  {ActionEntity[]} ...actionEntities
 	 */
 	WaitAll(...actionEntities: ActionEntity[]) {
 		const actionIds = _.map(actionEntities, (entity) => entity.id);

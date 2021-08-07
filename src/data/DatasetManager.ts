@@ -173,7 +173,7 @@ export class DatasetManager {
 		EnsureCreated(route);
 		if (Memory.datasets[route]["id"]) {
 			let result = Memory.datasets[route]["id"].data[id];
-			return result[0] as T;
+			return result?result[0] as T:undefined;
 		}
 		return undefined;
 	}
@@ -190,8 +190,8 @@ export class DatasetManager {
 				let lookup = [];
 				// 非聚集联查id索引
 				for (const id of result as string[]) {
-					let entity = Memory.datasets[route]["id"].data[id][0];
-					lookup.push(entity);
+					let entity = Memory.datasets[route]["id"].data[id] ? Memory.datasets[route]["id"].data[id][0] : undefined;
+					if (entity) lookup.push(entity);
 				}
 				return lookup as T[];
 			}

@@ -9,6 +9,8 @@ export const ReachAction: Action = {
 			if (!target || !this) return "fail";
 			const pos: RoomPosition = Convert.ToRoomPosition(target);
 			if (this.pos.getRangeTo(pos) > range) {
+				new RoomVisual("sim").circle(pos.x, pos.y);
+				//this.move(this.pos.getDirectionTo(target));
 				this.moveTo(target);
 				return "running";
 			} else {
@@ -26,16 +28,12 @@ export const ReachAction: Action = {
 		const operatorId = reachAction.operatorId;
 		const creep = Game.getObjectById<Creep>(operatorId);
 		if (!creep) {
-			ActionContext.Remove(reachAction);
 			return "fail";
 		}
 		const posEntity:PosEntity = rawParas[0];
 		const range:number = rawParas[1];
 		const pos = new RoomPosition(posEntity.x, posEntity.y, posEntity.roomName);
 		const actionStatus = creep.reach(pos, range);
-		if (actionStatus == "complete" || actionStatus == "fail") {
-			ActionContext.Remove(reachAction);
-		}
 		return actionStatus;
 	}
 }

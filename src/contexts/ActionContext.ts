@@ -16,7 +16,7 @@ interface ActionContext extends Context {
 export const ActionContext: ActionContext = {
 	route: "action",
 	Initialize() {
-		DatasetManager.Create(this.route, [], [], true)
+		DatasetManager.Create(this.route, [], [], false);
 	},
 	Add(action: ActionEntity) {
 		DatasetManager.Add(this.route, action);
