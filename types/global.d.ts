@@ -35,6 +35,7 @@ interface Creep {
 declare namespace NodeJS {
 	interface Global {
 		mounted: boolean
+		redis: Redis
 		testFunc():void
 	}
 }
@@ -52,6 +53,21 @@ interface Dataset {
 		data: {
 			[value: string]: any[]
 		}
+	}
+}
+
+/**
+ * 键值对缓存
+ */
+interface Redis {
+	[route:string]: Cache
+}
+
+interface Cache {
+	created: number
+	lifetime: number
+	data: {
+		[key:string]: any
 	}
 }
 
