@@ -1,3 +1,5 @@
+import { TimeoutAction } from "actions/generalActions/timeoutAction";
+import { ActionContext } from "contexts/ActionContext";
 import { TaskContext } from "contexts/TaskContext";
 
 export class Task {
@@ -31,7 +33,25 @@ export class Task {
 			waitType: "all",
 			actionsIds: actionIds
 		})
-		TaskContext.Update(this._task);
+		TaskContext.
+		Update(this._task);
+	}
+
+	WaitWithTimeout(actionEntity: ActionEntity, lifetime: number) {
+		this.WaitAll(actionEntity, Task.Timeout(lifetime));
+	}
+
+	WaitAnyWithTimeout(actionEntities: ActionEntity[], lifetime: number) {
+		this.WaitAny(...actionEntities, Task.Timeout(lifetime));
+	}
+
+	WaitAllWithTimeout(actionEntities: ActionEntity[], lifetime: number) {
+		this.WaitAll(...actionEntities, Task.Timeout(lifetime));
+	}
+
+	static Timeout(lifetime: number): ActionEntity {
+		const timeoutAction = ActionContext.CreateAndAdd("", TimeoutAction.type, [lifetime]);
+		return timeoutAction;
 	}
 }
 

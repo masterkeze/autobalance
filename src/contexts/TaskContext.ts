@@ -1,6 +1,7 @@
 import { DatasetManager } from "data/DatasetManager"
 import { UniqueId } from "utils/UniqueId";
 import { ActionContext } from "./ActionContext";
+import { ResourceLockContext } from "./ResourceLockEntity";
 
 interface TaskContext extends Context {
 	Add(entity: TaskEntity): void
@@ -15,7 +16,7 @@ interface TaskContext extends Context {
 export const TaskContext: TaskContext = {
 	route: "task",
 	Initialize() {
-		DatasetManager.Create(this.route, [], [], false)
+		DatasetManager.Create(this.route, [], [], false);
 	},
 	Add(task: TaskEntity) {
 		DatasetManager.Add(this.route, task);
@@ -24,6 +25,7 @@ export const TaskContext: TaskContext = {
 		task.actionsGroups.forEach((group) => {
 			ActionContext.RemoveByIds(group.actionsIds);
 		})
+		ResourceLockContext.RemoveByTaskId(task.id);
 		DatasetManager.Remove(this.route, task);
 	},
 	Update(task: TaskEntity) {

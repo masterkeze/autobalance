@@ -100,7 +100,7 @@ interface PosEntity {
 
 // 指令
 
-type ActionStatus = "running" | "complete" | "fail"
+type ActionStatus = "running" | "complete" | "fail" | "timeout" | "intime"
 
 interface ActionEntity extends Entity {
 	operatorId: string
@@ -110,7 +110,7 @@ interface ActionEntity extends Entity {
 
 
 // 任务
-type TaskStatus = "running" | "complete" | "fail"
+type TaskStatus = "running" | "complete" | "fail" | "timeout"
 interface Action {
 	type:string
 	// 将同步方法，异步方法挂载到prototype上
@@ -129,4 +129,15 @@ interface TaskEntity extends Entity {
 	status: TaskStatus
 	step: number
 	actionsGroups:ActionGroup[]
+}
+
+
+// 资源锁
+
+interface ResourceLockEntity extends Entity {
+	objectId: string
+	taskId: string
+	direction: "in" | "out"
+	resourceType: ResourceConstant
+	amount: number
 }

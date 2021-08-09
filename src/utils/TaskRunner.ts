@@ -21,6 +21,12 @@ export class TaskRunner {
 				TaskContext.Update(taskEntity);
 				return "fail";
 			}
+			// 超时，整体失败
+			if (results.includes("timeout")) {
+				taskEntity.status = "timeout";
+				TaskContext.Update(taskEntity);
+				return "timeout";
+			}
 			if (waitType == "all") {
 				// 有执行中的，继续执行
 				if (results.includes("running")) {
@@ -57,6 +63,14 @@ export class TaskRunner {
 	}
 
 	static RemoveFailedTasks(): void {
+		const failedTasks = TaskContext.GetTasksByStatus("fail");
+		if (failedTasks.length > 0) {
+			Logger.Info("TaskRunner.RemoveFailedTasks", `Removing ${failedTasks.length} failed tasks.`)
+			_.map(failedTasks, (task) => { TaskContext.Remove(task) });
+		}
+	}
+
+	static RemovetimeoutTasks(): void {
 		const failedTasks = TaskContext.GetTasksByStatus("fail");
 		if (failedTasks.length > 0) {
 			Logger.Info("TaskRunner.RemoveFailedTasks", `Removing ${failedTasks.length} failed tasks.`)
