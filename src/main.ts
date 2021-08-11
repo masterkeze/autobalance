@@ -73,11 +73,11 @@ export const loop = ErrorMapper.wrapLoop(() => {
 		creep.harvest(source);
 		if (controller) creep.upgradeController(controller);
 	}))
-	for (const name in Memory.creeps) {
-		if (!(name in Game.creeps)) {
-			delete Memory.creeps[name];
-		}
-	}
+	// for (const name in Memory.creeps) {
+	// 	if (!(name in Game.creeps)) {
+	// 		delete Memory.creeps[name];
+	// 	}
+	// }
 	// MountAll();
 	// //TaskRunner.RemoveCompleteTasks();
 	// TaskRunner.RemoveFailedTasks();
