@@ -71,10 +71,10 @@ export class TaskRunner {
 	}
 
 	static RemovetimeoutTasks(): void {
-		const failedTasks = TaskContext.GetTasksByStatus("fail");
-		if (failedTasks.length > 0) {
-			Logger.Info("TaskRunner.RemoveFailedTasks", `Removing ${failedTasks.length} failed tasks.`)
-			_.map(failedTasks, (task) => { TaskContext.Remove(task) });
+		const timeoutTasks = TaskContext.GetTasksByStatus("timeout");
+		if (timeoutTasks.length > 0) {
+			Logger.Info("TaskRunner.RemovetimeoutTasks", `Removing ${timeoutTasks.length} timeout tasks.`)
+			_.map(timeoutTasks, (task) => { TaskContext.Remove(task) });
 		}
 	}
 }

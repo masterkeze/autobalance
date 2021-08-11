@@ -1,7 +1,7 @@
 import { DatasetManager } from "data/DatasetManager"
 import { UniqueId } from "utils/UniqueId";
 import { ActionContext } from "./ActionContext";
-import { ResourceLockContext } from "./ResourceLockEntity";
+import { ResourceLockContext } from "./ResourceLockContext";
 
 interface TaskContext extends Context {
 	Add(entity: TaskEntity): void

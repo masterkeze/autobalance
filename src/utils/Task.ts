@@ -4,9 +4,10 @@ import { TaskContext } from "contexts/TaskContext";
 
 export class Task {
 	public _task: TaskEntity;
-
+	public id: string;
 	constructor() {
 		this._task = TaskContext.CreateAndAdd();
+		this.id = this._task.id;
 	}
 	Wait(actionEntity: ActionEntity) {
 		this.WaitAll(actionEntity);
