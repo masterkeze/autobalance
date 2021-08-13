@@ -1,18 +1,6 @@
 import { DatasetManager } from "data/DatasetManager";
 import { UniqueId } from "utils/UniqueId";
 
-interface TimeoutEntity extends Entity {
-	created: number
-}
-interface TimeoutContext extends Context {
-	Add(entity: TimeoutEntity): void
-	Remove(entity: TimeoutEntity): void
-	Update(entity: TimeoutEntity): void
-	Get(id: string): TimeoutEntity | undefined
-	Create(): TimeoutEntity
-	CreateAndAdd(): TimeoutEntity
-}
-
 export const TimeoutContext: TimeoutContext = {
 	route: "timeout",
 	Initialize() {

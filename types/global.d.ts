@@ -79,34 +79,16 @@ interface IndexConfig {
 }
 
 // 数据基类
-interface Entity {
-	id: string
-}
 
-interface Context {
-	route: string,
-	Initialize(): void
-	Add(entity: Entity): void
-	Remove(entity: Entity): void
-	Update(entity: Entity): void
-	Get(id: string): Entity | undefined
-}
 
-interface PosEntity {
-	roomName: string
-	x: number
-	y: number
-}
+
+
+
 
 // 指令
 
 type ActionStatus = "running" | "complete" | "fail" | "timeout" | "intime"
 
-interface ActionEntity extends Entity {
-	operatorId: string
-	type: string
-	parameters: any[]
-}
 
 
 // 任务
@@ -125,19 +107,4 @@ interface ActionGroup {
 	actionsIds: string[]
 }
 
-interface TaskEntity extends Entity {
-	status: TaskStatus
-	step: number
-	actionsGroups:ActionGroup[]
-}
 
-
-// 资源锁
-
-interface ResourceLockEntity extends Entity {
-	objectId: string
-	taskId: string
-	direction: "in" | "out"
-	resourceType: ResourceConstant
-	amount: number
-}

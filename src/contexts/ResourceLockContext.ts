@@ -1,16 +1,5 @@
 import { DatasetManager } from "data/DatasetManager"
 import { UniqueId } from "utils/UniqueId";
-interface ResourceLockContext extends Context {
-	Add(entity: ResourceLockEntity): void
-	Remove(entity: ResourceLockEntity): void
-	Update(entity: ResourceLockEntity): void
-	Get(id: string): ResourceLockEntity | undefined
-	Create(objectId: string, taskId: string, direction: "in" | "out", resourceType: ResourceConstant, amount: number): ResourceLockEntity
-	CreateAndAdd(objectId: string, taskId: string, direction: "in" | "out", resourceType: ResourceConstant, amount: number): ResourceLockEntity
-	GetResourceLocksByTaskId(taskId: string): ResourceLockEntity[]
-	GetResourceLocksByObjectId(objectId: string): ResourceLockEntity[]
-	RemoveByTaskId(taskId: string):void
-}
 
 export const ResourceLockContext: ResourceLockContext = {
 	route: "resourceLock",

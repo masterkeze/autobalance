@@ -3,15 +3,6 @@ import { UniqueId } from "utils/UniqueId";
 import { ActionContext } from "./ActionContext";
 import { ResourceLockContext } from "./ResourceLockContext";
 
-interface TaskContext extends Context {
-	Add(entity: TaskEntity): void
-	Remove(entity: TaskEntity): void
-	Update(entity: TaskEntity): void
-	Get(id: string): TaskEntity | undefined
-	Create(): TaskEntity
-	CreateAndAdd(): TaskEntity
-	GetTasksByStatus(status: TaskStatus): TaskEntity[]
-}
 
 export const TaskContext: TaskContext = {
 	route: "task",

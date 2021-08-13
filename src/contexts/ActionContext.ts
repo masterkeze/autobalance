@@ -1,18 +1,6 @@
 import { DatasetManager } from "data/DatasetManager"
 import { UniqueId } from "utils/UniqueId";
 
-interface ActionContext extends Context {
-	Add(entity: ActionEntity): void
-	Remove(entity: ActionEntity): void
-	Update(entity: ActionEntity): void
-	Get(id: string): ActionEntity | undefined
-	Create(operatorId: string, type: string, parameters: any[]): ActionEntity
-	CreateAndAdd(operatorId: string, type: string, parameters: any[]): ActionEntity
-	RemoveById(id: string): void
-	RemoveByIds(ids:string[]):void
-}
-
-
 export const ActionContext: ActionContext = {
 	route: "action",
 	Initialize() {
