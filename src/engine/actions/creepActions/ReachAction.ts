@@ -1,7 +1,7 @@
 import { fail } from "assert";
-import { CreepIntentsCache } from "cache/CreepIntentsCache";
-import { ActionContext } from "contexts/ActionContext";
-import { Logger } from "services/Logger";
+import { IntentsCache } from "data/cache/IntentsCache";
+import { ActionContext } from "data/contexts/ActionContext";
+import { Logger } from "utils/Logger";
 import { Convert } from "utils/Convert";
 
 export const ReachAction: Action = {
@@ -14,10 +14,10 @@ export const ReachAction: Action = {
 			if (this.pos.getRangeTo(pos) > range) {
 				new RoomVisual("sim").circle(pos.x, pos.y);
 				//this.move(this.pos.getDirectionTo(target));
-				if (CreepIntentsCache.TestCreepIntent(this.id, "move")) {
+				if (IntentsCache.TestCreepIntent(this.id, "move")) {
 					let retCode = this.moveTo(target);
 					if (retCode == OK) {
-						CreepIntentsCache.AddCreepIntent(this.id, "move");
+						IntentsCache.AddCreepIntent(this.id, "move");
 					} else {
 						Logger.ErrorCode(`ReachAction:${this.name}.moveTo(${JSON.stringify(Convert.ToPosEntity(target))}`, retCode);
 						return "fail";

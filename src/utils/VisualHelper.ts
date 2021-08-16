@@ -1,4 +1,4 @@
-import { ResourceLockContext } from "contexts/ResourceLockContext";
+import { ResourceLockContext } from "data/contexts/ResourceLockContext";
 
 export class VisualHelper {
 	static DrawResourceLocks(object: StructureStorage) {

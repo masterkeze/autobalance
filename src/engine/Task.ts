@@ -1,6 +1,6 @@
-import { TimeoutAction } from "actions/generalActions/timeoutAction";
-import { ActionContext } from "contexts/ActionContext";
-import { TaskContext } from "contexts/TaskContext";
+import { TimeoutAction } from "engine/actions/generalActions/timeoutAction";
+import { ActionContext } from "data/contexts/ActionContext";
+import { TaskContext } from "data/contexts/TaskContext";
 
 export class Task {
 	public _task: TaskEntity;

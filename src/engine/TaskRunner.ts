@@ -1,5 +1,5 @@
-import { TaskContext } from "contexts/TaskContext";
-import { Logger } from "services/Logger";
+import { TaskContext } from "data/contexts/TaskContext";
+import { Logger } from "utils/Logger";
 import { ActionRunner } from "./ActionRunner";
 import { Task } from "./Task";
 export class TaskRunner {

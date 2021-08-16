@@ -1,5 +1,5 @@
-import { ActionContext } from "contexts/ActionContext";
-import { ResourceLockContext } from "contexts/ResourceLockContext";
+import { ActionContext } from "data/contexts/ActionContext";
+import { ResourceLockContext } from "data/contexts/ResourceLockContext";
 
 export class ResourceLock {
 	static LockAsync(object: { store: StoreDefinition, id: string }, taskId: string, direction: "in" | "out", resourceType: ResourceConstant, amount: number): ActionEntity {

@@ -1,4 +1,4 @@
-import { Logger } from "services/Logger";
+import { Logger } from "utils/Logger";
 
 
 function EnsureCreated(route: string): boolean {

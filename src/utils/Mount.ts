@@ -1,6 +1,6 @@
-import { MountActions } from "actions";
-import { MountContexts } from "contexts";
-import { Logger } from "services/Logger";
+import { MountActions } from "engine/actions";
+import { MountContexts } from "data/contexts";
+import { Logger } from "utils/Logger";
 
 export function MountAll() {
 	if (!global.mounted) {

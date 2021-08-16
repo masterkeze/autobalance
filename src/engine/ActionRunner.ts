@@ -1,6 +1,6 @@
-import { AllActions } from "actions";
-import { ActionContext } from "contexts/ActionContext";
-import { Logger } from "services/Logger";
+import { AllActions } from "engine/actions";
+import { ActionContext } from "data/contexts/ActionContext";
+import { Logger } from "utils/Logger";
 let _mapActionByType: { [type: string]: Action };
 
 function getActionMapping(): { [type: string]: Action } {

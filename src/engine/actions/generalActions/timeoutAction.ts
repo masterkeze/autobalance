@@ -1,11 +1,8 @@
-import { ActionContext } from "contexts/ActionContext";
-import { TimeoutContext } from "contexts/TimeoutContext";
+import { ActionContext } from "data/contexts/ActionContext";
+import { TimeoutContext } from "data/contexts/TimeoutContext";
 
 export const TimeoutAction: Action = {
 	type:"timeout",
-	mount() {
-
-	},
 	run(timeoutAction: ActionEntity) {
 		const rawParas = timeoutAction.parameters;
 		const operatorId = timeoutAction.operatorId;

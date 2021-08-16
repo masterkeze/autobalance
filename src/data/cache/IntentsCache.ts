@@ -1,17 +1,54 @@
-import { CacheManager } from "data/CacheManager"
-import { Logger } from "services/Logger";
-import { SetOperation } from "utils/SetOperation";
+import { CacheManager } from 'data/CacheManager';
+import { Logger } from 'utils/Logger';
+import { SetOperation } from 'utils/SetOperation';
 
-type CreepIntent = "harvest" | "attack" | "build" | "repair" | "dismantle" | "attackController" | "rangedHeal" | "heal" | "rangedAttack" | "rangedMassAttack" | "upgradeController" | "withdraw" | "transfer" | "drop" | "move"
-type CreepIntents = CreepIntent[]
+type CreepIntent =
+	| 'harvest'
+	| 'attack'
+	| 'build'
+	| 'repair'
+	| 'dismantle'
+	| 'attackController'
+	| 'rangedHeal'
+	| 'heal'
+	| 'rangedAttack'
+	| 'rangedMassAttack'
+	| 'upgradeController'
+	| 'withdraw'
+	| 'transfer'
+	| 'drop'
+	| 'move';
+type CreepIntents = CreepIntent[];
 
-const conflictGroup1: Set<CreepIntent> = new Set(["harvest", "attack", "build", "repair", "dismantle", "attackController", "rangedHeal", "heal"]);
-const conflictGroup2: Set<CreepIntent> = new Set(["rangedAttack", "rangedMassAttack", "build", "repair", "rangedHeal"]);
-const conflictGroup3: Set<CreepIntent> = new Set(["upgradeController", "build", "repair", "transfer","withdraw", "drop"]);
+const conflictGroup1: Set<CreepIntent> = new Set([
+	'harvest',
+	'attack',
+	'build',
+	'repair',
+	'dismantle',
+	'attackController',
+	'rangedHeal',
+	'heal',
+]);
+const conflictGroup2: Set<CreepIntent> = new Set([
+	'rangedAttack',
+	'rangedMassAttack',
+	'build',
+	'repair',
+	'rangedHeal',
+]);
+const conflictGroup3: Set<CreepIntent> = new Set([
+	'upgradeController',
+	'build',
+	'repair',
+	'transfer',
+	'withdraw',
+	'drop',
+]);
 const conflictGroups = [conflictGroup1, conflictGroup2, conflictGroup3];
-export class CreepIntentsCache {
-	static route = "creepintents"
-	static lifetime = 0
+export class IntentsCache {
+	static route = 'creepintents';
+	static lifetime = 0;
 	static Get(creepId: string): CreepIntents | undefined {
 		return CacheManager.Get<CreepIntents>(this.route, this.lifetime, creepId);
 	}

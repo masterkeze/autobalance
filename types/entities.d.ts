@@ -42,6 +42,9 @@ interface MessageEntity extends Entity {
 	producer: string
 	createTick: number
 	state: "pending" | "running" | "complete" | "fail"
-	taskId: string
 	data:any
+}
+
+interface ServiceEntity extends Entity {
+	route:string
 }

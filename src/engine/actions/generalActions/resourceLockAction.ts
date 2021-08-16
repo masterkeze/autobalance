@@ -1,8 +1,7 @@
-import { ResourceLock } from "utils/ResourceLock";
+import { ResourceLock } from "engine/ResourceLock";
 
 export const ResourceLockAction: Action = {
 	type: "resourceLock",
-	mount() { },
 	run(resourceLockEntity: ActionEntity) {
 		return ResourceLock.RunLockAction(resourceLockEntity);
 	}

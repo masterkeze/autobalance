@@ -49,3 +49,14 @@ interface TimeoutContext extends Context {
 	Create(): TimeoutEntity
 	CreateAndAdd(): TimeoutEntity
 }
+
+interface MessageContext extends Context {
+	Add(entity: MessageEntity): void
+	Remove(entity: MessageEntity): void
+	Update(entity: MessageEntity): void
+	Get(id: string): MessageEntity | undefined
+	Create(route: string, roomName: string, producer: string, data: any): MessageEntity
+	CreateAndAdd(route: string, roomName: string, producer: string, data: any): MessageEntity
+	GetByRoute(route: string): MessageEntity[]
+	GetByProducer(producer: string):MessageEntity[]
+}

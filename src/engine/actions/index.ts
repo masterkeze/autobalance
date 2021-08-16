@@ -3,5 +3,7 @@ import { GeneralActions } from "./generalActions";
 
 export const AllActions = [...CreepActions, ...GeneralActions];
 export const MountActions = function () {
-	_.map(AllActions, (action) => action.mount());
+	_.map(AllActions, (action) => {
+		if (action.mount) action.mount();
+	});
 }

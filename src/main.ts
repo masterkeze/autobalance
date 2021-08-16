@@ -1,12 +1,12 @@
 import { ErrorMapper } from "utils/ErrorMapper";
 import { MountAll } from "utils/Mount";
 import { SpiralMoveTask } from "tasks/examples/SpiralMoveTask";
-import { TaskRunner } from "utils/TaskRunner";
+import { TaskRunner } from "engine/TaskRunner";
 import { One2OneTransferTask } from "tasks/examples/One2OneTransferTask";
 import { DistributeTask } from "tasks/examples/DistributeTask";
-import { CreepIntentsCache } from "cache/CreepIntentsCache";
-import { Task } from "utils/Task";
-import { ResourceLock } from "utils/ResourceLock";
+import { IntentsCache } from "data/cache/IntentsCache";
+import { Task } from "engine/Task";
+import { ResourceLock } from "engine/ResourceLock";
 import { VisualHelper } from "utils/VisualHelper";
 
 console.log("script reloaded!")

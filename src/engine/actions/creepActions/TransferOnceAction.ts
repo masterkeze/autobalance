@@ -1,6 +1,6 @@
-import { CreepIntentsCache } from "cache/CreepIntentsCache";
-import { ActionContext } from "contexts/ActionContext";
-import { Logger } from "services/Logger";
+import { IntentsCache } from "data/cache/IntentsCache";
+import { ActionContext } from "data/contexts/ActionContext";
+import { Logger } from "utils/Logger";
 import { Convert } from "utils/Convert";
 
 export const transferOnceAction: Action = {
@@ -11,10 +11,10 @@ export const transferOnceAction: Action = {
 			if (!target || !this) return "fail";
 			const pos: RoomPosition = Convert.ToRoomPosition(target);
 			if (this.pos.getRangeTo(pos) == 1) {
-				if (CreepIntentsCache.TestCreepIntent(this.id, "transfer")) {
+				if (IntentsCache.TestCreepIntent(this.id, "transfer")) {
 					let retCode = this.transfer(target, resourceType, amount);
 					if (retCode == OK) {
-						CreepIntentsCache.AddCreepIntent(this.id, "transfer");
+						IntentsCache.AddCreepIntent(this.id, "transfer");
 						return "complete";
 					} else {
 						Logger.ErrorCode(`TransferOnceAction:${this.name}.transfer(${target.id},${resourceType},${amount ? amount : null})`, retCode);
