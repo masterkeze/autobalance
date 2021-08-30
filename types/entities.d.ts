@@ -37,14 +37,16 @@ interface TimeoutEntity extends Entity {
 }
 
 interface MessageEntity extends Entity {
-	route: string
-	roomName: string
-	producer: string
+	consumerId: string
+	producerId: string
 	createTick: number
 	state: "pending" | "running" | "complete" | "fail"
 	data:any
 }
 
 interface ServiceEntity extends Entity {
-	route:string
+	route: string
+	roomName: string
+	creepNames: string[]
+	data:any
 }

@@ -31,6 +31,11 @@ interface Creep {
 	transferOnceAsync(target: AnyCreep | Structure, resourceType: ResourceConstant, amount?: number): ActionEntity
 }
 
+interface StructureSpawn {
+	recycle(target: Creep): ActionStatus
+	recycleAsync(target: Creep): ActionEntity
+}
+
 // Syntax for adding proprties to `global` (ex "global.log")
 declare namespace NodeJS {
 	interface Global {

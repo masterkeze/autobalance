@@ -1,4 +1,4 @@
-import { Task } from "utils/Task";
+import { Task } from "engine/Task";
 
 export function DistributeTask(creep: Creep, resourceType: ResourceConstant, fromStructure: Structure | Tombstone | Ruin, toStructures: Structure[], totalAmount?: number) {
 	const task = new Task();

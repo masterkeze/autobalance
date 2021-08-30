@@ -1,4 +1,0 @@
-interface Service {
-	route: string
-
-}

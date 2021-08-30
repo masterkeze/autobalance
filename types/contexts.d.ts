@@ -55,8 +55,19 @@ interface MessageContext extends Context {
 	Remove(entity: MessageEntity): void
 	Update(entity: MessageEntity): void
 	Get(id: string): MessageEntity | undefined
-	Create(route: string, roomName: string, producer: string, data: any): MessageEntity
-	CreateAndAdd(route: string, roomName: string, producer: string, data: any): MessageEntity
-	GetByRoute(route: string): MessageEntity[]
-	GetByProducer(producer: string):MessageEntity[]
+	Create(consumerId:string, producerId:string, data: any): MessageEntity
+	CreateAndAdd(consumerId: string, producerId: string, data: any): MessageEntity
+	GetByConsumerId(consumerId: string): MessageEntity[]
+	GetByProducerId(producerId: string):MessageEntity[]
+}
+
+interface ServiceContext extends Context {
+	Add(entity: ServiceEntity): void
+	Remove(entity: ServiceEntity): void
+	Update(entity: ServiceEntity): void
+	Get(id: string): ServiceEntity | undefined
+	Create(route: string, roomName: string, data: any): ServiceEntity
+	CreateAndAdd(route: string, roomName: string, data: any): ServiceEntity
+	GetByRoute(route: string): ServiceEntity[]
+	GetByRouteAndRoomName(route:string, roomName: string): ServiceEntity[]
 }

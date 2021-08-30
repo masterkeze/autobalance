@@ -5,10 +5,10 @@ export const MessageContext: MessageContext = {
 	route: "message",
 	Initialize(){
 		DatasetManager.Create(this.route, [], [{
-			indexName: "route",
+			indexName: "consumerId",
 			clustered: false
 		}, {
-			indexName: "producer",
+			indexName: "producerId",
 			clustered: false
 		}], false);
 	},
@@ -24,18 +24,18 @@ export const MessageContext: MessageContext = {
 	Get(id: string) {
 		return DatasetManager.GetById<MessageEntity>(this.route, id);
 	},
-	Create(route:string,roomName:string,producer:string,data:any) {
-		return { id: UniqueId.Get(), route,roomName,producer,data,createTick:Game.time,state:"pending" };
+	Create(consumerId: string, producerId: string, data:any) {
+		return { id: UniqueId.Get(), consumerId,producerId,data,createTick:Game.time,state:"pending" };
 	},
-	CreateAndAdd(route: string, roomName: string, producer: string, data: any) {
-		const message = this.Create(route, roomName, producer, data);
+	CreateAndAdd(consumerId: string, producerId: string, data: any) {
+		const message = this.Create(consumerId,producerId, data);
 		this.Add(message);
 		return message;
 	},
-	GetByRoute(route: string) {
-		return DatasetManager.GetByProperty(this.route, "route", route);
+	GetByConsumerId(consumerId: string) {
+		return DatasetManager.GetByProperty(this.route, "consumerId", consumerId);
 	},
-	GetByProducer(producer: string) {
-		return DatasetManager.GetByProperty(this.route, "producer", producer);
+	GetByProducerId(producerId: string) {
+		return DatasetManager.GetByProperty(this.route, "producerId", producerId);
 	}
 }

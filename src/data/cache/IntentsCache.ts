@@ -46,6 +46,7 @@ const conflictGroup3: Set<CreepIntent> = new Set([
 	'drop',
 ]);
 const conflictGroups = [conflictGroup1, conflictGroup2, conflictGroup3];
+
 export class IntentsCache {
 	static route = 'creepintents';
 	static lifetime = 0;
