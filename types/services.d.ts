@@ -2,6 +2,7 @@ interface Service {
 	route: string
 	CreateIfNotExists(route:string, roomName:string):ServiceEntity
 	Run(entity: ServiceEntity): void
+	RunAll():void
 }
 
 

@@ -60,5 +60,9 @@ export const SpawnService: SpawnService = {
 	},
 	Run(entity: ServiceEntity) {
 
+	},
+	RunAll() {
+		const serviceEntities = ServiceContext.GetByRoute(this.route);
+		_.map(serviceEntities, (entity) => this.Run(entity));
 	}
 }
